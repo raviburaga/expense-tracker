@@ -5,10 +5,16 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const port = process.env.PORT || 5000;
-
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: 'http://localhost:3000', // Allow requests from this origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 const mongodbURI = 'mongodb+srv://buragaravi:qzlCHauz9boCgeCK@cluster0.aow0j7e.mongodb.net/';
@@ -25,19 +31,16 @@ dbConnection.connect()
     const usersCollection = database.collection('users');
     const expensesCollection = database.collection('Expenses');
 
-    // Function to generate JWT token
     const generateToken = (user) => {
       const payload = {
         userId: user._id,
         email: user.email,
         name: user.name,
         phone: user.phone,
-        // Add any other relevant user data
       };
-      return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' }); // Adjust expiration as needed
+      return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
     };
 
-    // Middleware to verify JWT token
     const verifyToken = (req, res, next) => {
       const token = req.headers.authorization;
       if (!token) {
@@ -48,17 +51,16 @@ dbConnection.connect()
         if (err) {
           return res.status(401).json({ message: 'Unauthorized - Invalid token' });
         }
-        req.user = decodedToken; // Attach decoded token to request object
+        req.user = decodedToken;
         next();
       });
     };
 
     // Root route to verify server deployment
-app.get('/', (req, res) => {
-  res.send('Backend server is running successfully!');
-});
+    app.get('/', (req, res) => {
+      res.send('Backend server is running successfully!');
+    });
 
-    // Login endpoint
     app.post('/login', async (req, res) => {
       const { email, password } = req.body;
       try {
@@ -72,7 +74,7 @@ app.get('/', (req, res) => {
           return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        const token = generateToken(user); // Generate JWT token
+        const token = generateToken(user);
         res.status(200).json({ message: 'Login successful', token, user });
       } catch (error) {
         console.error('Error logging in:', error);
@@ -80,7 +82,6 @@ app.get('/', (req, res) => {
       }
     });
 
-    // Signup endpoint
     app.post('/signup', async (req, res) => {
       const { name, email, phone, password } = req.body;
       try {
@@ -94,7 +95,7 @@ app.get('/', (req, res) => {
         const newUser = { name, email, phone, password: hashedPassword, salary: 0, expenses: [] };
 
         const result = await usersCollection.insertOne(newUser);
-        const token = generateToken(newUser); // Generate JWT token
+        const token = generateToken(newUser);
         res.status(201).json({ message: 'User created successfully', token, user: newUser });
       } catch (error) {
         console.error('Error signing up:', error);
@@ -102,7 +103,6 @@ app.get('/', (req, res) => {
       }
     });
 
-    // Update salary endpoint
     app.put('/salary', verifyToken, async (req, res) => {
       try {
         const userId = req.user.userId;
@@ -123,10 +123,9 @@ app.get('/', (req, res) => {
       }
     });
 
-    // Get user's salary endpoint
     app.get('/salary', verifyToken, async (req, res) => {
       try {
-        const userId = req.user.userId; // Extract userId from token payload
+        const userId = req.user.userId;
         const user = await usersCollection.findOne({ _id: new ObjectId(userId) }, { projection: { salary: 1 } });
         if (!user) {
           return res.status(404).json({ message: 'User not found' });
@@ -138,10 +137,9 @@ app.get('/', (req, res) => {
       }
     });
 
-    // Protected route to fetch expenses
     app.get('/expenses', verifyToken, async (req, res) => {
       try {
-        const userId = req.user.userId; // Extract userId from token payload
+        const userId = req.user.userId;
         const expenses = await expensesCollection.find({ userId: new ObjectId(userId) }).toArray();
         res.status(200).json(expenses);
       } catch (error) {
@@ -150,14 +148,12 @@ app.get('/', (req, res) => {
       }
     });
 
-    // Protected route to add expenses
     app.post('/expenses', verifyToken, async (req, res) => {
       try {
         const { amount, category, date } = req.body;
-        const userId = req.user.userId; // Extract userId from token payload
+        const userId = req.user.userId;
         await expensesCollection.insertOne({ userId: new ObjectId(userId), amount, category, date });
 
-        // Add expense to user's expenses array
         await usersCollection.updateOne(
           { _id: new ObjectId(userId) },
           { $push: { expenses: { amount, category, date } } }
@@ -170,14 +166,12 @@ app.get('/', (req, res) => {
       }
     });
 
-    // Protected route to delete an expense
     app.delete('/expenses/:id', verifyToken, async (req, res) => {
       try {
         const expenseId = req.params.id;
         const userId = req.user.userId;
         const result = await expensesCollection.deleteOne({ _id: new ObjectId(expenseId), userId: new ObjectId(userId) });
         if (result.deletedCount === 1) {
-          // Remove expense from user's expenses array
           await usersCollection.updateOne(
             { _id: new ObjectId(userId) },
             { $pull: { expenses: { _id: new ObjectId(expenseId) } } }
@@ -192,7 +186,6 @@ app.get('/', (req, res) => {
       }
     });
 
-    // Protected route to update an expense
     app.put('/expenses/:id', verifyToken, async (req, res) => {
       try {
         const expenseId = req.params.id;
@@ -204,7 +197,6 @@ app.get('/', (req, res) => {
         };
         const result = await expensesCollection.updateOne(filter, updateDoc);
         if (result.modifiedCount === 1) {
-          // Update expense in user's expenses array
           await usersCollection.updateOne(
             { _id: new ObjectId(userId), 'expenses._id': new ObjectId(expenseId) },
             { $set: { 'expenses.$.amount': amount, 'expenses.$.category': category, 'expenses.$.date': date } }
@@ -224,7 +216,7 @@ app.get('/', (req, res) => {
     console.error('Error connecting to MongoDB:', error.message);
   });
 
-
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server started at port: ${port}`);
 });
