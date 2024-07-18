@@ -1,0 +1,16 @@
+/* index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Additional global styles */
+body {
+  background-color: #2A184E; /* Dark background */
+  color: #FFFFFF; /* White text */
+}
+
+/* For dark mode */
+.dark-mode {
+  background-color: #2A184E; /* Dark background */
+  color: #FFFFFF; /* White text */
+}
