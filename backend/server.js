@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
@@ -52,6 +52,11 @@ dbConnection.connect()
         next();
       });
     };
+
+    // Root route to verify server deployment
+app.get('/', (req, res) => {
+  res.send('Backend server is running successfully!');
+});
 
     // Login endpoint
     app.post('/login', async (req, res) => {
