@@ -17,7 +17,7 @@ const ExpenseForm = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/expenses', {
+      await axios.post('https://nodejs-serverless-function-express-one-umber.vercel.app/expenses', {
         amount: Number(amount), // Ensure the amount is sent as a number
         category,
         date

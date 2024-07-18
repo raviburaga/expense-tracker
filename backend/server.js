@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const port = 5000;
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -217,7 +219,7 @@ dbConnection.connect()
     console.error('Error connecting to MongoDB:', error.message);
   });
 
-const port = 5000;
+
 app.listen(port, () => {
   console.log(`Server started at port: ${port}`);
 });
