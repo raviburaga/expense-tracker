@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const app = express();
 
 const corsOptions = {
-  origin: 'https://expense-tracker-ravi.vercel.app/', // Allow requests from this origin
+  origin: '*', // Allow requests from this origin
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization',
   credentials: true,

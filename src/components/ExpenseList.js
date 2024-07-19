@@ -33,7 +33,7 @@ const ExpenseList = () => {
 
   const handleDelete = async (expenseId) => {
     try {
-      await axios.delete(`http://localhost:5000/expenses/${expenseId}`, {
+      await axios.delete(`https://backend-expense-tracker-2.onrender.com/expenses/${expenseId}`, {
         headers: { Authorization: token }
       });
       setExpenses(expenses.filter((expense) => expense._id !== expenseId));
@@ -51,7 +51,7 @@ const ExpenseList = () => {
 
   const handleUpdate = async (expenseId) => {
     try {
-      await axios.put(`http://localhost:5000/expenses/${expenseId}`, {
+      await axios.put(`https://backend-expense-tracker-2.onrender.com/expenses/${expenseId}`, {
         amount: Number(editedAmount),
         category: editedCategory,
         date: editedDate
