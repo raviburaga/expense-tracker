@@ -12,7 +12,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://nodejs-serverless-function-express-one-umber.vercel.app/signup', {
+      const response = await axios.post('https://backend-expense-tracker-2.onrender.com/signup', {
         name,
         email,
         password,

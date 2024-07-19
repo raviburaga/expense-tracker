@@ -20,7 +20,7 @@ const ExpenseList = () => {
   const fetchExpenses = async () => {
     try {
       setIsFetching(true); // Set fetching state to true
-      const response = await axios.get('https://nodejs-serverless-function-express-one-umber.vercel.app/expenses', {
+      const response = await axios.get('https://backend-expense-tracker-2.onrender.com/expenses', {
         headers: { Authorization: token }
       });
       setExpenses(response.data);

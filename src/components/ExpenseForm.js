@@ -17,7 +17,7 @@ const ExpenseForm = () => {
     }
 
     try {
-      await axios.post('https://nodejs-serverless-function-express-one-umber.vercel.app/expenses', {
+      await axios.post('https://backend-expense-tracker-2.onrender.com/expenses', {
         amount: Number(amount), // Ensure the amount is sent as a number
         category,
         date
@@ -45,7 +45,7 @@ const ExpenseForm = () => {
           <input
             id="amount"
             type="number"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
+            className="mt-1 text-violet block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             required
@@ -56,7 +56,7 @@ const ExpenseForm = () => {
           <input
             id="category"
             type="text"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
+            className="mt-1 text-violet block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
@@ -67,7 +67,7 @@ const ExpenseForm = () => {
           <input
             id="date"
             type="date"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
+            className="mt-1 text-violet block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required

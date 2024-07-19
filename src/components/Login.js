@@ -12,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://nodejs-serverless-function-express-one-umber.vercel.app/login', { email, password });
+      const response = await axios.post('https://backend-expense-tracker-2.onrender.com/login', { email, password });
       const { token, user } = response.data;
       console.log('userid:',user._id, token);
       // Store user ID in local storage

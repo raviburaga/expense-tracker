@@ -21,7 +21,7 @@ const Home = () => {
   
     const fetchUserData = async () => {
       try {
-        const salaryResponse = await axios.get(`https://nodejs-serverless-function-express-one-umber.vercel.app/salary`, {
+        const salaryResponse = await axios.get(`https://backend-expense-tracker-2.onrender.com/salary`, {
           headers: { Authorization: token }
         });
         console.log('Salary response:', salaryResponse.data);
@@ -36,7 +36,7 @@ const Home = () => {
 
   const handleSaveSalary = async () => {
     try {
-      await axios.put(`https://nodejs-serverless-function-express-one-umber.vercel.app/salary`, { salary: Number(newSalaryInput) }, {
+      await axios.put(`https://backend-expense-tracker-2.onrender.com/salary`, { salary: Number(newSalaryInput) }, {
         headers: { Authorization: token }
       });
       setSalary(newSalaryInput);

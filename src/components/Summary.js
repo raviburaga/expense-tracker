@@ -16,7 +16,7 @@ const Summary = () => {
   const fetchSummary = async () => {
     try {
       setIsFetching(true);
-      const response = await axios.get('http://localhost:5000/expenses', {
+      const response = await axios.get('https://backend-expense-tracker-2.onrender.com/expenses', {
         headers: { Authorization: token },
       });
       const expenses = response.data;
