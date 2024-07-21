@@ -20,7 +20,7 @@ const SignUp = () => {
       });
 
       if (response.status === 201) {
-        navigate('/login'); // Redirect to login page after successful signup
+        navigate('/'); // Redirect to login page after successful signup
       } else {
         console.error('Signup failed');
         // Handle signup failure (show error message, etc.)
@@ -40,7 +40,7 @@ const SignUp = () => {
             <input
               id="name"
               type="text"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
+              className="mt-1 font-violet block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -51,7 +51,7 @@ const SignUp = () => {
             <input
               id="email"
               type="email"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
+              className="mt-1 font-violet block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -62,7 +62,7 @@ const SignUp = () => {
             <input
               id="password"
               type="password"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
+              className="mt-1 font-violet block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -73,7 +73,7 @@ const SignUp = () => {
             <input
               id="confirmPassword"
               type="password"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
+              className="mt-1 font-violet block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-light focus:border-violet-light sm:text-sm"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
