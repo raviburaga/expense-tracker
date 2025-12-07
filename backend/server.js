@@ -17,7 +17,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-const mongodbURI = 'mongodb+srv://buragaravi:qzlCHauz9boCgeCK@cluster0.aow0j7e.mongodb.net/';
+const mongodbURI = "your mongodb url";
 const databaseName = 'Cluster0';
 
 const JWT_SECRET = 'raviburaga'; // Replace with a secure secret
@@ -220,3 +220,4 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server started at port: ${port}`);
 });
+
